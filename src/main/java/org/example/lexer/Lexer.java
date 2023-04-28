@@ -61,8 +61,7 @@ public class Lexer {
                         registerToken(tokenWithPosition);
                         continue;
                     }
-                }
-                if (Util.isPoundSign(symbol)) {
+                } else if (Util.isPoundSign(symbol)) {
                     tokenWithPosition = dateAutomata.check(line, column);
                     if (tokenWithPosition.token() != Token.INVALID) {
                         registerToken(tokenWithPosition);
