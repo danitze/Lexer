@@ -16,7 +16,6 @@ import org.example.token.Token;
 import org.example.token.ValidToken;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class Lexer {
@@ -42,8 +41,6 @@ public class Lexer {
     private final List<ValidToken> validTokens = new ArrayList<>();
 
     private final List<InvalidToken> invalidTokens = new ArrayList<>();
-
-    List<TokenWithPosition> tokens = new LinkedList<>();
 
     public void processLine() {
         while (column < line.length()) {
