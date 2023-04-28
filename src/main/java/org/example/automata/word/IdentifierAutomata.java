@@ -35,6 +35,7 @@ public class IdentifierAutomata extends Automata {
     }
 
     private void init() {
+        State underscoreState = new State();
         State identifierFirstSymbolState = new State();
         identifierFirstSymbolState.setToken(Token.IDENTIFIER);
 
@@ -50,13 +51,18 @@ public class IdentifierAutomata extends Automata {
 
             identifierSymbolState.getNextStates().put((char)('a' + i), identifierSymbolState);
             identifierSymbolState.getNextStates().put((char)('A' + i), identifierSymbolState);
+
+            underscoreState.getNextStates().put((char)('a' + i), identifierSymbolState);
+            underscoreState.getNextStates().put((char)('A' + i), identifierSymbolState);
         }
 
-        initialState.getNextStates().put('_', identifierFirstSymbolState);
+        initialState.getNextStates().put('_', underscoreState);
+        underscoreState.getNextStates().put('_', identifierSymbolState);
         identifierFirstSymbolState.getNextStates().put('_', identifierSymbolState);
         identifierSymbolState.getNextStates().put('_', identifierSymbolState);
 
         for (int i = 0; i < 10; ++i) {
+            underscoreState.getNextStates().put(Character.forDigit(i, 10), identifierSymbolState);
             identifierFirstSymbolState.getNextStates().put(Character.forDigit(i, 10), identifierSymbolState);
             identifierSymbolState.getNextStates().put(Character.forDigit(i, 10), identifierSymbolState);
         }
