@@ -42,6 +42,18 @@ public class IdentifierAutomata extends Automata {
         State identifierSymbolState = new State();
         identifierSymbolState.setToken(Token.IDENTIFIER);
 
+        State intIdentifierState = new State();
+        intIdentifierState.setToken(Token.INTEGER_IDENTIFIER);
+
+        State longIdentifierState = new State();
+        longIdentifierState.setToken(Token.LONG_IDENTIFIER);
+
+        State floatIdentifierState = new State();
+        floatIdentifierState.setToken(Token.FLOAT_IDENTIFIER);
+
+        State stringIdentifierState = new State();
+        stringIdentifierState.setToken(Token.STRING_IDENTIFIER);
+
         for(int i = 0; i < 26; ++i) {
             initialState.getNextStates().put((char)('a' + i), identifierFirstSymbolState);
             initialState.getNextStates().put((char)('A' + i), identifierFirstSymbolState);
@@ -66,5 +78,17 @@ public class IdentifierAutomata extends Automata {
             identifierFirstSymbolState.getNextStates().put(Character.forDigit(i, 10), identifierSymbolState);
             identifierSymbolState.getNextStates().put(Character.forDigit(i, 10), identifierSymbolState);
         }
+
+        identifierFirstSymbolState.getNextStates().put('%', intIdentifierState);
+        identifierSymbolState.getNextStates().put('%', intIdentifierState);
+
+        identifierFirstSymbolState.getNextStates().put('&', longIdentifierState);
+        identifierSymbolState.getNextStates().put('&', longIdentifierState);
+
+        identifierFirstSymbolState.getNextStates().put('#', floatIdentifierState);
+        identifierSymbolState.getNextStates().put('#', floatIdentifierState);
+
+        identifierFirstSymbolState.getNextStates().put('$', stringIdentifierState);
+        identifierSymbolState.getNextStates().put('$', stringIdentifierState);
     }
 }
