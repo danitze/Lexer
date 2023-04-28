@@ -1,8 +1,7 @@
 package org.example.automata;
 
-import org.example.State;
-import org.example.Token;
-import org.example.TokenWithPosition;
+import org.example.token.Token;
+import org.example.lexer.TokenWithPosition;
 
 import java.util.HashMap;
 import java.util.LinkedList;

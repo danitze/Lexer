@@ -1,4 +1,4 @@
-package org.example;
+package org.example.token;
 
 public enum Token {
     INVALID("INVALID"),

@@ -1,8 +1,9 @@
-package org.example.automata;
+package org.example.automata.comment;
 
-import org.example.State;
-import org.example.Token;
-import org.example.TokenWithPosition;
+import org.example.automata.State;
+import org.example.token.Token;
+import org.example.lexer.TokenWithPosition;
+import org.example.automata.Automata;
 
 public class CommentAutomata extends Automata {
 
@@ -20,7 +21,7 @@ public class CommentAutomata extends Automata {
             }
             char currentSymbol = line.charAt(position);
             if (state != initialState) {
-                currentSymbol = '*';
+                currentSymbol = (char) -1;
             }
             if (state.getNextStates().containsKey(currentSymbol)) {
                 state = state.getNextStates().get(currentSymbol);
@@ -37,7 +38,7 @@ public class CommentAutomata extends Automata {
         commentState.setToken(Token.COMMENTARY);
         initialState.getNextStates().put('\'', commentState);
 
-        //* is any symbol
-        commentState.getNextStates().put('*', commentState);
+        //-1 is any symbol
+        commentState.getNextStates().put((char) -1, commentState);
     }
 }

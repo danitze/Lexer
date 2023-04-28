@@ -1,8 +1,10 @@
-package org.example.automata;
+package org.example.automata.date;
 
-import org.example.State;
-import org.example.Token;
-import org.example.TokenWithPosition;
+import org.example.automata.State;
+import org.example.token.Token;
+import org.example.lexer.TokenWithPosition;
+import org.example.util.Util;
+import org.example.automata.Automata;
 
 public class DateAutomata extends Automata {
 
@@ -18,15 +20,24 @@ public class DateAutomata extends Automata {
             if (line.length() <= position) {
                 break;
             }
+
             char currentSymbol = line.charAt(position);
+            char oldSymbol = currentSymbol;
+
             if (currentSymbol != '\"' && currentSymbol != '\'' && currentSymbol != '#') {
-                currentSymbol = '*';
+                currentSymbol = (char) -1;
             }
+
             if (state.getNextStates().containsKey(currentSymbol)) {
                 state = state.getNextStates().get(currentSymbol);
                 ++position;
             } else {
-                break;
+                currentSymbol = oldSymbol;
+                if (Util.isTokenEnd(currentSymbol)) {
+                    break;
+                } else {
+                    return processInvalidToken(line, position);
+                }
             }
         }
         return new TokenWithPosition(state.getToken(), position);
@@ -40,9 +51,9 @@ public class DateAutomata extends Automata {
 
         initialState.getNextStates().put('#', openHashState);
 
-        //We use * to denote any symbol which is not #, ' and "
-        openHashState.getNextStates().put('*', dateSymbolState);
+        //We use -1 to denote any symbol which is not #, ' and "
+        openHashState.getNextStates().put((char) -1, dateSymbolState);
 
-        dateSymbolState.getNextStates().put('#', closeHashState);
+        dateSymbolState.getNextStates().put((char) -1, closeHashState);
     }
 }

@@ -1,9 +1,10 @@
-package org.example.automata;
+package org.example.automata.word;
 
-import org.example.State;
-import org.example.Token;
-import org.example.TokenWithPosition;
-import org.example.Util;
+import org.example.automata.State;
+import org.example.token.Token;
+import org.example.lexer.TokenWithPosition;
+import org.example.util.Util;
+import org.example.automata.Automata;
 
 public class IdentifierAutomata extends Automata {
 
@@ -25,7 +26,7 @@ public class IdentifierAutomata extends Automata {
                 ++position;
             } else {
                 if (!Util.isTokenEnd(currentSymbol)) {
-                    return new TokenWithPosition(Token.INVALID, position);
+                    return processInvalidToken(line, position);
                 }
                 break;
             }

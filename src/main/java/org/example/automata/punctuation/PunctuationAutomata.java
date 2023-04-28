@@ -1,6 +1,7 @@
-package org.example.automata;
+package org.example.automata.punctuation;
 
-import org.example.Util;
+import org.example.util.Util;
+import org.example.automata.PreDefinedSequenceAutomata;
 
 public class PunctuationAutomata extends PreDefinedSequenceAutomata {
 

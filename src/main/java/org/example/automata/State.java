@@ -1,4 +1,6 @@
-package org.example;
+package org.example.automata;
+
+import org.example.token.Token;
 
 import java.util.HashMap;
 import java.util.Map;

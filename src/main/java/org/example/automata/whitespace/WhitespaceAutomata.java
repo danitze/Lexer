@@ -1,6 +1,7 @@
-package org.example.automata;
+package org.example.automata.whitespace;
 
-import org.example.Util;
+import org.example.util.Util;
+import org.example.automata.PreDefinedSequenceAutomata;
 
 public class WhitespaceAutomata extends PreDefinedSequenceAutomata {
 

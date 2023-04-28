@@ -1,8 +1,10 @@
-package org.example.automata;
+package org.example.automata.string;
 
-import org.example.State;
-import org.example.Token;
-import org.example.TokenWithPosition;
+import org.example.automata.State;
+import org.example.token.Token;
+import org.example.lexer.TokenWithPosition;
+import org.example.util.Util;
+import org.example.automata.Automata;
 
 public class StringAutomata extends Automata {
 
@@ -19,14 +21,20 @@ public class StringAutomata extends Automata {
                 break;
             }
             char currentSymbol = line.charAt(position);
+            char oldSymbol = currentSymbol;
             if (currentSymbol != '\"') {
-                currentSymbol = '*';
+                currentSymbol = (char) -1;
             }
             if (state.getNextStates().containsKey(currentSymbol)) {
                 state = state.getNextStates().get(currentSymbol);
                 ++position;
             } else {
-                break;
+                currentSymbol = oldSymbol;
+                if (Util.isTokenEnd(currentSymbol)) {
+                    break;
+                } else {
+                    return processInvalidToken(line, position);
+                }
             }
         }
         return new TokenWithPosition(state.getToken(), position);
@@ -45,13 +53,13 @@ public class StringAutomata extends Automata {
 
         initialState.getNextStates().put('\"', openQuotesState);
 
-        //We use * to denote any symbol which is not "
-        openQuotesState.getNextStates().put('*', charState);
+        //We use -1 to denote any symbol which is not "
+        openQuotesState.getNextStates().put((char) -1, charState);
         openQuotesState.getNextStates().put('\"', closedStringState);
 
-        charState.getNextStates().put('*', stringState);
+        charState.getNextStates().put((char) -1, stringState);
 
-        stringState.getNextStates().put('*', stringState);
+        stringState.getNextStates().put((char) -1, stringState);
 
         charState.getNextStates().put('\"', closedCharState);
         stringState.getNextStates().put('\"', closedStringState);

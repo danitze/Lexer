@@ -1,8 +1,9 @@
-package org.example.automata;
+package org.example.automata.line_continuation;
 
-import org.example.State;
-import org.example.Token;
-import org.example.TokenWithPosition;
+import org.example.automata.State;
+import org.example.token.Token;
+import org.example.lexer.TokenWithPosition;
+import org.example.automata.Automata;
 
 public class LineContinuationAutomata extends Automata {
 

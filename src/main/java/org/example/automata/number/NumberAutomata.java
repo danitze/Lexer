@@ -1,9 +1,10 @@
-package org.example.automata;
+package org.example.automata.number;
 
-import org.example.State;
-import org.example.Token;
-import org.example.TokenWithPosition;
-import org.example.Util;
+import org.example.automata.State;
+import org.example.token.Token;
+import org.example.lexer.TokenWithPosition;
+import org.example.util.Util;
+import org.example.automata.Automata;
 
 public class NumberAutomata extends Automata {
 
@@ -27,7 +28,7 @@ public class NumberAutomata extends Automata {
                 if (Util.isTokenEnd(currentSymbol)) {
                     break;
                 } else {
-                    return new TokenWithPosition(Token.INVALID, position);
+                    return processInvalidToken(line, position);
                 }
             }
         }

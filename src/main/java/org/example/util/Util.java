@@ -1,4 +1,6 @@
-package org.example;
+package org.example.util;
+
+import org.example.token.Token;
 
 import java.util.List;
 
