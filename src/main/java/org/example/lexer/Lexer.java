@@ -50,13 +50,6 @@ public class Lexer {
             TokenWithPosition tokenWithPosition;
             char symbol = line.charAt(column);
             if (Util.isOperator(symbol)) {
-                if (Util.isPoundSign(symbol)) {
-                    tokenWithPosition = dateAutomata.check(line, column);
-                    if (tokenWithPosition.token() != Token.INVALID) {
-                        registerToken(tokenWithPosition);
-                        continue;
-                    }
-                }
                 tokenWithPosition = operatorAutomata.check(line, column);
                 registerToken(tokenWithPosition);
                 continue;
@@ -64,6 +57,13 @@ public class Lexer {
             if (Util.isPunctuation(symbol)) {
                 if (Util.isDot(symbol)) {
                     tokenWithPosition = numberAutomata.check(line, column);
+                    if (tokenWithPosition.token() != Token.INVALID) {
+                        registerToken(tokenWithPosition);
+                        continue;
+                    }
+                }
+                if (Util.isPoundSign(symbol)) {
+                    tokenWithPosition = dateAutomata.check(line, column);
                     if (tokenWithPosition.token() != Token.INVALID) {
                         registerToken(tokenWithPosition);
                         continue;

@@ -54,6 +54,7 @@ public class DateAutomata extends Automata {
         //We use -1 to denote any symbol which is not #, ' and "
         openHashState.getNextStates().put((char) -1, dateSymbolState);
 
-        dateSymbolState.getNextStates().put((char) -1, closeHashState);
+        dateSymbolState.getNextStates().put((char) -1, dateSymbolState);
+        dateSymbolState.getNextStates().put('#', closeHashState);
     }
 }
