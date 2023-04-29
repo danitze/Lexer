@@ -15,13 +15,18 @@ import org.example.token.InvalidToken;
 import org.example.token.Token;
 import org.example.token.ValidToken;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Lexer {
 
-    private int row = 0;
-    private int column = 0;
+    private int row;
+    private int column;
 
     private String line = "";
 
@@ -42,7 +47,38 @@ public class Lexer {
 
     private final List<InvalidToken> invalidTokens = new ArrayList<>();
 
-    public void processLine() {
+    public void processFile(String filePath) throws IOException {
+        row = 0;
+        column = 0;
+
+        Path path = Paths.get(filePath);
+        BufferedReader reader = Files.newBufferedReader(path);
+        String line;
+        while ((line = reader.readLine()) != null) {
+            System.out.println(line);
+            this.line = line;
+            processLine();
+            ++row;
+            column = 0;
+        }
+        reader.close();
+    }
+
+    public void print() {
+        for (int i = 0; i < validTokens.size(); ++i) {
+            ValidToken validToken = validTokens.get(i);
+            String symbol = symbolTable.get(i);
+            System.out.println("Token: " + validToken.getToken() + " | symbol table index: " + i + " | row: " + validToken.getRow() + " | column: " + validToken.getColumn() + " | symbol: |" + symbol + "|");
+        }
+        if (!invalidTokens.isEmpty()) {
+            System.out.println("Errors");
+        }
+        for (InvalidToken invalidToken: invalidTokens) {
+            System.out.println("Invalid token | row: " + invalidToken.row() + " | column: " + invalidToken.column() + " | sequence: |" + invalidToken.sequence() + "|");
+        }
+    }
+
+    private void processLine() {
         while (column < line.length()) {
             TokenWithPosition tokenWithPosition;
             char symbol = line.charAt(column);
@@ -108,34 +144,16 @@ public class Lexer {
         }
     }
 
-    public void setLine(String line) {
-        this.line = line;
-    }
-
-    public void print() {
-        for (int i = 0; i < validTokens.size(); ++i) {
-            ValidToken validToken = validTokens.get(i);
-            String symbol = symbolTable.get(i);
-            System.out.println("Token: " + validToken.getToken() + " | symbol table index: " + i + " | row: " + validToken.getRow() + " | column: " + validToken.getColumn() + " | symbol: |" + symbol + "|");
-        }
-        if (!invalidTokens.isEmpty()) {
-            System.out.println("Errors");
-        }
-        for (InvalidToken invalidToken: invalidTokens) {
-            System.out.println("Invalid token | row: " + invalidToken.row() + " | column: " + invalidToken.column() + " | sequence: |" + invalidToken.sequence() + "|");
-        }
-    }
-
     private void registerToken(TokenWithPosition tokenWithPosition) {
         Token token = tokenWithPosition.token();
         int position = tokenWithPosition.position();
         if (token == Token.INVALID) {
-            InvalidToken invalidToken = new InvalidToken(line.substring(column, position), row, column);
+            InvalidToken invalidToken = new InvalidToken(line.substring(column, position), row + 1, column + 1);
             invalidTokens.add(invalidToken);
         } else {
             symbolTable.add(line.substring(column, position));
 
-            ValidToken validToken = new ValidToken(token, row, column);
+            ValidToken validToken = new ValidToken(token, row + 1, column + 1);
             validTokens.add(validToken);
         }
         column = tokenWithPosition.position();
