@@ -55,7 +55,6 @@ public class Lexer {
         BufferedReader reader = Files.newBufferedReader(path);
         String line;
         while ((line = reader.readLine()) != null) {
-            System.out.println(line);
             this.line = line;
             processLine();
             ++row;
