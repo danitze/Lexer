@@ -75,6 +75,10 @@ public class Lexer {
         for (InvalidToken invalidToken: invalidTokens) {
             System.out.println("Invalid token | row: " + invalidToken.row() + " | column: " + invalidToken.column() + " | sequence: |" + invalidToken.sequence() + "|");
         }
+        System.out.println("Symbol table");
+        for (int i = 0; i < symbolTable.size(); ++i) {
+            System.out.println(i + 1 + ") |" + symbolTable.get(i) + "|");
+        }
     }
 
     private void processLine() {

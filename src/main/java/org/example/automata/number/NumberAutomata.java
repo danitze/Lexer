@@ -50,7 +50,7 @@ public class NumberAutomata extends Automata {
         State explicitFloatState = new State();
         explicitFloatState.setToken(Token.FLOAT_VALUE);
 
-        for (int i = 0; i < 9; ++i) {
+        for (int i = 0; i < 10; ++i) {
             initialState.getNextStates().put(Character.forDigit(i, 10), intState);
             intState.getNextStates().put(Character.forDigit(i, 10), intState);
             dotState.getNextStates().put(Character.forDigit(i, 10), floatState);

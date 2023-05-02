@@ -8,6 +8,13 @@ import org.example.automata.Automata;
 
 public class StringAutomata extends Automata {
 
+    private final State openQuotesState = new State();
+    private final State charState = new State();
+    private final State stringState = new State();
+    private final State closedCharState = new State();
+    private final State castedCharState = new State();
+    private final State closedStringState = new State();
+
     public StringAutomata() {
         super();
         init();
@@ -22,7 +29,7 @@ public class StringAutomata extends Automata {
             }
             char currentSymbol = line.charAt(position);
             char oldSymbol = currentSymbol;
-            if (currentSymbol != '\"') {
+            if ((state == openQuotesState || state == charState || state == stringState) && currentSymbol != '\"') {
                 currentSymbol = (char) -1;
             }
             if (state.getNextStates().containsKey(currentSymbol)) {
@@ -41,14 +48,8 @@ public class StringAutomata extends Automata {
     }
 
     private void init() {
-        State openQuotesState = new State();
-        State charState = new State();
-        State stringState = new State();
-
-        State closedCharState = new State();
-        closedCharState.setToken(Token.CHAR_VALUE);
-
-        State closedStringState = new State();
+        closedCharState.setToken(Token.STRING_VALUE);
+        castedCharState.setToken(Token.CHAR_VALUE);
         closedStringState.setToken(Token.STRING_VALUE);
 
         initialState.getNextStates().put('\"', openQuotesState);
@@ -63,5 +64,7 @@ public class StringAutomata extends Automata {
 
         charState.getNextStates().put('\"', closedCharState);
         stringState.getNextStates().put('\"', closedStringState);
+
+        closedCharState.getNextStates().put('c', castedCharState);
     }
 }
