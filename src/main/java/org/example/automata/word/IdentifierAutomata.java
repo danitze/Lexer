@@ -36,23 +36,12 @@ public class IdentifierAutomata extends Automata {
 
     private void init() {
         State underscoreState = new State();
-        State identifierFirstSymbolState = new State();
-        identifierFirstSymbolState.setToken(Token.IDENTIFIER);
-
-        State identifierSymbolState = new State();
-        identifierSymbolState.setToken(Token.IDENTIFIER);
-
-        State intIdentifierState = new State();
-        intIdentifierState.setToken(Token.INTEGER_IDENTIFIER);
-
-        State longIdentifierState = new State();
-        longIdentifierState.setToken(Token.LONG_IDENTIFIER);
-
-        State floatIdentifierState = new State();
-        floatIdentifierState.setToken(Token.FLOAT_IDENTIFIER);
-
-        State stringIdentifierState = new State();
-        stringIdentifierState.setToken(Token.STRING_IDENTIFIER);
+        State identifierFirstSymbolState = new State(Token.IDENTIFIER);
+        State identifierSymbolState = new State(Token.IDENTIFIER);
+        State intIdentifierState = new State(Token.INTEGER_IDENTIFIER);
+        State longIdentifierState = new State(Token.LONG_IDENTIFIER);
+        State floatIdentifierState = new State(Token.FLOAT_IDENTIFIER);
+        State stringIdentifierState = new State(Token.STRING_IDENTIFIER);
 
         for(int i = 0; i < 26; ++i) {
             initialState.getNextStates().put((char)('a' + i), identifierFirstSymbolState);

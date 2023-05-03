@@ -36,10 +36,10 @@ public class LineContinuationAutomata extends Automata {
 
     private void init() {
         State spaceState = new State();
-        State lineContinuationState = new State();
-        lineContinuationState.setToken(Token.LINE_CONTINUATION);
+        State lineContinuationState = new State(Token.LINE_CONTINUATION);
 
         initialState.getNextStates().put(' ', spaceState);
+
         spaceState.getNextStates().put('_', lineContinuationState);
     }
 }

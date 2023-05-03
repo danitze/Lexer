@@ -38,18 +38,13 @@ public class DateAutomata extends Automata {
     }
 
     private void init() {
-        State openHashState = new State();
-        State dateSymbolState = new State();
-        State emptyCloseHashState = new State();
-        State closeHashState = new State();
-
         InvalidToken notClosedDateToken = new InvalidToken("Not closed date");
         InvalidToken emptyDateToken = new InvalidToken("Empty date");
 
-        openHashState.setToken(notClosedDateToken);
-        dateSymbolState.setToken(notClosedDateToken);
-        emptyCloseHashState.setToken(emptyDateToken);
-        closeHashState.setToken(Token.DATE_VALUE);
+        State openHashState = new State(notClosedDateToken);
+        State dateSymbolState = new State(notClosedDateToken);
+        State emptyCloseHashState = new State(emptyDateToken);
+        State closeHashState = new State(Token.DATE_VALUE);
 
         initialState.getNextStates().put('#', openHashState);
 

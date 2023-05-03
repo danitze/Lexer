@@ -36,19 +36,11 @@ public class NumberAutomata extends Automata {
     }
 
     private void init() {
-        State intState = new State();
-        intState.setToken(Token.INT_VALUE);
-
+        State intState = new State(Token.INT_VALUE);
         State dotState = new State();
-
-        State floatState = new State();
-        floatState.setToken(Token.FLOAT_VALUE);
-
-        State explicitIntState = new State();
-        explicitIntState.setToken(Token.INT_VALUE);
-
-        State explicitFloatState = new State();
-        explicitFloatState.setToken(Token.FLOAT_VALUE);
+        State floatState = new State(Token.FLOAT_VALUE);
+        State explicitIntState = new State(Token.INT_VALUE);
+        State explicitFloatState = new State(Token.FLOAT_VALUE);
 
         for (int i = 0; i < 10; ++i) {
             initialState.getNextStates().put(Character.forDigit(i, 10), intState);
@@ -57,8 +49,8 @@ public class NumberAutomata extends Automata {
             floatState.getNextStates().put(Character.forDigit(i, 10), floatState);
         }
         initialState.getNextStates().put('.', dotState);
-        intState.getNextStates().put('.', dotState);
 
+        intState.getNextStates().put('.', dotState);
         intState.getNextStates().put('%', explicitIntState);
         intState.getNextStates().put('#', explicitFloatState);
 

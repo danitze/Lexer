@@ -12,9 +12,9 @@ public class StringAutomata extends Automata {
     private final State openQuotesState = new State();
     private final State charState = new State();
     private final State stringState = new State();
-    private final State closedCharState = new State();
-    private final State castedCharState = new State();
-    private final State closedStringState = new State();
+    private final State closedCharState = new State(Token.STRING_VALUE);
+    private final State castedCharState = new State(Token.CHAR_VALUE);
+    private final State closedStringState = new State(Token.STRING_VALUE);
 
     public StringAutomata() {
         super();
@@ -49,10 +49,6 @@ public class StringAutomata extends Automata {
     }
 
     private void init() {
-        closedCharState.setToken(Token.STRING_VALUE);
-        castedCharState.setToken(Token.CHAR_VALUE);
-        closedStringState.setToken(Token.STRING_VALUE);
-
         InvalidToken unclosedToken = new InvalidToken("Unclosed string");
 
         openQuotesState.setToken(unclosedToken);
@@ -66,10 +62,9 @@ public class StringAutomata extends Automata {
         openQuotesState.getNextStates().put('\"', closedStringState);
 
         charState.getNextStates().put((char) -1, stringState);
+        charState.getNextStates().put('\"', closedCharState);
 
         stringState.getNextStates().put((char) -1, stringState);
-
-        charState.getNextStates().put('\"', closedCharState);
         stringState.getNextStates().put('\"', closedStringState);
 
         closedCharState.getNextStates().put('c', castedCharState);

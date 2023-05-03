@@ -34,8 +34,7 @@ public class CommentAutomata extends Automata {
     }
 
     private void init() {
-        State commentState = new State();
-        commentState.setToken(Token.COMMENTARY);
+        State commentState = new State(Token.COMMENTARY);
         initialState.getNextStates().put('\'', commentState);
 
         //-1 is any symbol
