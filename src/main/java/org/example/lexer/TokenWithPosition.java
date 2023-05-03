@@ -1,6 +1,6 @@
 package org.example.lexer;
 
-import org.example.token.Token;
+import org.example.token.BaseToken;
 
-public record TokenWithPosition(Token token, int position) {
+public record TokenWithPosition(BaseToken token, int position) {
 }

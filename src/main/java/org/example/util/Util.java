@@ -233,6 +233,10 @@ public interface Util {
         return symbol == '\'';
     }
 
+    static boolean isStringStart(char symbol) {
+        return symbol == '\"';
+    }
+
     static boolean isOperator(char symbol) {
         return "+-*/^\\&=<>".contains(String.valueOf(symbol));
     }
@@ -246,6 +250,10 @@ public interface Util {
     }
 
     static boolean isTokenEnd(char symbol) {
-        return isWhiteSpace(symbol) || isOperator(symbol) || isPunctuation(symbol);
+        return isWhiteSpace(symbol)
+                || isOperator(symbol)
+                || isPunctuation(symbol)
+                || isCommentStart(symbol)
+                || isStringStart(symbol);
     }
 }

@@ -27,7 +27,7 @@ public class KeywordAutomata extends PreDefinedSequenceAutomata {
                 if (Util.isTokenEnd(currentSymbol)) {
                     break;
                 } else {
-                    return processInvalidToken(line, position);
+                    return processInvalidToken("Wrong keyword", line, position);
                 }
             }
         }

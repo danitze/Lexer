@@ -1,9 +1,9 @@
 package org.example.automata.date;
 
 import org.example.automata.State;
+import org.example.token.InvalidToken;
 import org.example.token.Token;
 import org.example.lexer.TokenWithPosition;
-import org.example.util.Util;
 import org.example.automata.Automata;
 
 public class DateAutomata extends Automata {
@@ -22,7 +22,6 @@ public class DateAutomata extends Automata {
             }
 
             char currentSymbol = line.charAt(position);
-            char oldSymbol = currentSymbol;
 
             if (currentSymbol != '\"' && currentSymbol != '\'' && currentSymbol != '#') {
                 currentSymbol = (char) -1;
@@ -32,12 +31,7 @@ public class DateAutomata extends Automata {
                 state = state.getNextStates().get(currentSymbol);
                 ++position;
             } else {
-                currentSymbol = oldSymbol;
-                if (Util.isTokenEnd(currentSymbol)) {
-                    break;
-                } else {
-                    return processInvalidToken(line, position);
-                }
+                break;
             }
         }
         return new TokenWithPosition(state.getToken(), position);
@@ -46,11 +40,20 @@ public class DateAutomata extends Automata {
     private void init() {
         State openHashState = new State();
         State dateSymbolState = new State();
+        State emptyCloseHashState = new State();
         State closeHashState = new State();
+
+        InvalidToken notClosedDateToken = new InvalidToken("Not closed date");
+        InvalidToken emptyDateToken = new InvalidToken("Empty date");
+
+        openHashState.setToken(notClosedDateToken);
+        dateSymbolState.setToken(notClosedDateToken);
+        emptyCloseHashState.setToken(emptyDateToken);
         closeHashState.setToken(Token.DATE_VALUE);
 
         initialState.getNextStates().put('#', openHashState);
 
+        openHashState.getNextStates().put('#', emptyCloseHashState);
         //We use -1 to denote any symbol which is not #, ' and "
         openHashState.getNextStates().put((char) -1, dateSymbolState);
 

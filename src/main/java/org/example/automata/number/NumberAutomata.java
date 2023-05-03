@@ -28,7 +28,7 @@ public class NumberAutomata extends Automata {
                 if (Util.isTokenEnd(currentSymbol)) {
                     break;
                 } else {
-                    return processInvalidToken(line, position);
+                    return processInvalidToken("Invalid identifier", line, position);
                 }
             }
         }

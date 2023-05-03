@@ -1,6 +1,7 @@
 package org.example.automata.string;
 
 import org.example.automata.State;
+import org.example.token.InvalidToken;
 import org.example.token.Token;
 import org.example.lexer.TokenWithPosition;
 import org.example.util.Util;
@@ -40,7 +41,7 @@ public class StringAutomata extends Automata {
                 if (Util.isTokenEnd(currentSymbol)) {
                     break;
                 } else {
-                    return processInvalidToken(line, position);
+                    return processInvalidToken("Invalid token", line, position);
                 }
             }
         }
@@ -51,6 +52,12 @@ public class StringAutomata extends Automata {
         closedCharState.setToken(Token.STRING_VALUE);
         castedCharState.setToken(Token.CHAR_VALUE);
         closedStringState.setToken(Token.STRING_VALUE);
+
+        InvalidToken unclosedToken = new InvalidToken("Unclosed string");
+
+        openQuotesState.setToken(unclosedToken);
+        charState.setToken(unclosedToken);
+        stringState.setToken(unclosedToken);
 
         initialState.getNextStates().put('\"', openQuotesState);
 

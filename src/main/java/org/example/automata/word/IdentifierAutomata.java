@@ -26,7 +26,7 @@ public class IdentifierAutomata extends Automata {
                 ++position;
             } else {
                 if (!Util.isTokenEnd(currentSymbol)) {
-                    return processInvalidToken(line, position);
+                    return processInvalidToken("Invalid identifier", line, position);
                 }
                 break;
             }

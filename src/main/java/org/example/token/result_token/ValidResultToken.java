@@ -1,8 +1,8 @@
-package org.example.token;
+package org.example.token.result_token;
 
 import org.example.token.Token;
 
-public class ValidToken {
+public class ValidResultToken {
 
     private final Token token;
 
@@ -10,7 +10,7 @@ public class ValidToken {
 
     private final int column;
 
-    public ValidToken(Token token, int row, int column) {
+    public ValidResultToken(Token token, int row, int column) {
         this.token = token;
         this.row = row;
         this.column = column;

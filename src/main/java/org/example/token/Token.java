@@ -1,7 +1,6 @@
 package org.example.token;
 
-public enum Token {
-    INVALID("INVALID"),
+public enum Token implements BaseToken {
     IDENTIFIER("IDENTIFIER"),
     INTEGER_IDENTIFIER("INTEGER_IDENTIFIER"),
     LONG_IDENTIFIER("LONG_IDENTIFIER"),
