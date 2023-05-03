@@ -1,12 +1,15 @@
 package org.example.automata.word;
 
 import org.example.automata.State;
+import org.example.token.InvalidToken;
 import org.example.token.Token;
 import org.example.lexer.TokenWithPosition;
 import org.example.util.Util;
 import org.example.automata.Automata;
 
 public class IdentifierAutomata extends Automata {
+
+    private static final String INVALID_IDENTIFIER_MESSAGE = "Invalid identifier";
 
     public IdentifierAutomata() {
         super();
@@ -26,7 +29,7 @@ public class IdentifierAutomata extends Automata {
                 ++position;
             } else {
                 if (!Util.isTokenEnd(currentSymbol)) {
-                    return processInvalidToken("Invalid identifier", line, position);
+                    return processInvalidToken(INVALID_IDENTIFIER_MESSAGE, line, position);
                 }
                 break;
             }
@@ -35,12 +38,14 @@ public class IdentifierAutomata extends Automata {
     }
 
     private void init() {
+        InvalidToken invalidIdentifierToken = new InvalidToken(INVALID_IDENTIFIER_MESSAGE);
+
         State underscoreState = new State();
         State identifierFirstSymbolState = new State(Token.IDENTIFIER);
         State identifierSymbolState = new State(Token.IDENTIFIER);
         State intIdentifierState = new State(Token.INTEGER_IDENTIFIER);
         State longIdentifierState = new State(Token.LONG_IDENTIFIER);
-        State floatIdentifierState = new State(Token.FLOAT_IDENTIFIER);
+        State decimalIdentifierState = new State(Token.DECIMAL_IDENTIFIER);
         State stringIdentifierState = new State(Token.STRING_IDENTIFIER);
 
         for(int i = 0; i < 26; ++i) {
@@ -74,8 +79,8 @@ public class IdentifierAutomata extends Automata {
         identifierFirstSymbolState.getNextStates().put('&', longIdentifierState);
         identifierSymbolState.getNextStates().put('&', longIdentifierState);
 
-        identifierFirstSymbolState.getNextStates().put('#', floatIdentifierState);
-        identifierSymbolState.getNextStates().put('#', floatIdentifierState);
+        identifierFirstSymbolState.getNextStates().put('#', decimalIdentifierState);
+        identifierSymbolState.getNextStates().put('#', decimalIdentifierState);
 
         identifierFirstSymbolState.getNextStates().put('$', stringIdentifierState);
         identifierSymbolState.getNextStates().put('$', stringIdentifierState);

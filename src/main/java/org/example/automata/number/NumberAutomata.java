@@ -38,23 +38,23 @@ public class NumberAutomata extends Automata {
     private void init() {
         State intState = new State(Token.INT_VALUE);
         State dotState = new State();
-        State floatState = new State(Token.FLOAT_VALUE);
+        State decimalState = new State(Token.DECIMAL_VALUE);
         State explicitIntState = new State(Token.INT_VALUE);
-        State explicitFloatState = new State(Token.FLOAT_VALUE);
+        State explicitDecimalState = new State(Token.DECIMAL_VALUE);
 
         for (int i = 0; i < 10; ++i) {
             initialState.getNextStates().put(Character.forDigit(i, 10), intState);
             intState.getNextStates().put(Character.forDigit(i, 10), intState);
-            dotState.getNextStates().put(Character.forDigit(i, 10), floatState);
-            floatState.getNextStates().put(Character.forDigit(i, 10), floatState);
+            dotState.getNextStates().put(Character.forDigit(i, 10), decimalState);
+            decimalState.getNextStates().put(Character.forDigit(i, 10), decimalState);
         }
         initialState.getNextStates().put('.', dotState);
 
         intState.getNextStates().put('.', dotState);
         intState.getNextStates().put('%', explicitIntState);
-        intState.getNextStates().put('#', explicitFloatState);
+        intState.getNextStates().put('#', explicitDecimalState);
 
-        floatState.getNextStates().put('#', explicitFloatState);
+        decimalState.getNextStates().put('#', explicitDecimalState);
     }
 
 

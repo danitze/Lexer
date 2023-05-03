@@ -190,10 +190,9 @@ public interface Util {
             Token.CURLY_BRACE_CLOSE,
             Token.PERIOD,
             Token.COMMA,
-            Token.COLON,
+            Token.SEPARATOR,
             Token.SEMICOLON,
-            Token.QUESTION_MARK,
-            Token.POUND_SIGN
+            Token.QUESTION_MARK
     );
 
     List<Token> whitespaceTokens = List.of(

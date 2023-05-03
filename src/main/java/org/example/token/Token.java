@@ -4,7 +4,7 @@ public enum Token implements BaseToken {
     IDENTIFIER("IDENTIFIER"),
     INTEGER_IDENTIFIER("INTEGER_IDENTIFIER"),
     LONG_IDENTIFIER("LONG_IDENTIFIER"),
-    FLOAT_IDENTIFIER("FLOAT_IDENTIFIER"),
+    DECIMAL_IDENTIFIER("DECIMAL_IDENTIFIER"),
     STRING_IDENTIFIER("STRING_IDENTIFIER"),
     COMMENTARY("Commentary"),
     LINE_CONTINUATION(" _"),
@@ -162,7 +162,7 @@ public enum Token implements BaseToken {
 
     //Values
     INT_VALUE("Int value"),
-    FLOAT_VALUE("FLOAT value"),
+    DECIMAL_VALUE("Decimal value"),
     CHAR_VALUE("Char value"),
     STRING_VALUE("String value"),
     DATE_VALUE("Date value"),
@@ -198,10 +198,9 @@ public enum Token implements BaseToken {
     CURLY_BRACE_CLOSE("}"),
     PERIOD("."),
     COMMA(","),
-    COLON(":"),
+    SEPARATOR(":"),
     SEMICOLON(";"),
     QUESTION_MARK("?"),
-    POUND_SIGN("#"),
 
     //Whitespace
     SPACE(" "),
